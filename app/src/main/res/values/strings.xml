@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Plant_Tracker</string>
+    <string name="start">Start</string>
+    <string name="enter_plant">Enter Plant</string>
+    <string name="settings">Settings</string>
+    <string name="map">Map</string>
+    <string name="plant_name">Plant Name</string>
+    <string name="plant_img">Plant Image</string>
+    <string name="location">Location</string>
+</resources>
