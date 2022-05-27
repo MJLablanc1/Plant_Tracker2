@@ -73,6 +73,13 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, MapActivity::class.java)
             intent.putParcelableArrayListExtra("plantData", plantListTemp)
             startActivity(intent)
+
+
+            }
+        val enterPlantButton = findViewById<Button>(R.id.settingsBtn)
+        enterPlantButton.setOnClickListener {
+            val intent = Intent(this, PlantInput::class.java)
+            startActivity(intent)
         }
     }
 }

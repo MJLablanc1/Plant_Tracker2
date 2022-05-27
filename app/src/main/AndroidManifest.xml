@@ -3,29 +3,33 @@
     package="com.isit322.plant_tracker">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/Theme.Plant_Tracker">
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Plant_Tracker"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".PlantInput"
+            android:exported="false" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}"/>
+            android:value="${MAPS_API_KEY}" />
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+            android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".MapActivity"
             android:exported="false"
-            android:label="Map"/>
+            android:label="Map" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -36,4 +40,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
