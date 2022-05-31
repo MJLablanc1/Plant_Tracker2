@@ -16,6 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Plant_Tracker"
         android:usesCleartextTraffic="true">
+        <provider
+            android:authorities="com.isit322.plant_tracker.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovider" />
+        </provider>
         <activity
             android:name=".PlantInput"
             android:exported="false" />
