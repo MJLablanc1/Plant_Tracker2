@@ -31,35 +31,19 @@
       android:text="@string/start"/>
 
   <Button
+      android:id="@+id/PlantListBtn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:layout_marginTop="24dp"
+      android:text="@string/plant_list"/>
+
+  <Button
         android:id="@+id/settingsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="24dp"
         android:text="@string/settings"/>
-
-  <ProgressBar
-      android:visibility="gone"
-      android:id="@+id/progress_bar"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"/>
-
-  <LinearLayout
-      android:visibility="gone"
-      android:id="@+id/linear_layout_recycler_view"
-      android:orientation="vertical"
-      android:layout_weight="9"
-      android:layout_width="match_parent"
-      android:background="@color/black"
-      android:padding="4dp"
-      android:layout_height="0dp">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"/>
-
-  </LinearLayout>
 
 </LinearLayout>

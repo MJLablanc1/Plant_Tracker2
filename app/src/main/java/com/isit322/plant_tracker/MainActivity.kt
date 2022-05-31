@@ -16,9 +16,6 @@ import com.isit322.artworklist.ui.PlantViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    lateinit var viewModel: PlantViewModel
-    lateinit var adapterRecyclerView: AdapterRecycler
-    var plantList: List<PlantItem>? = ArrayList()
 
     @RequiresApi(Build.VERSION_CODES.N)
     val locationPermissionRequest = registerForActivityResult(
@@ -41,11 +38,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
-        adapterRecyclerView = AdapterRecycler(plantList, this)
-        recycler_view.adapter = adapterRecyclerView
-        recycler_view.layoutManager = LinearLayoutManager(this)
-
         /*
             locationPermissionRequest.launch(arrayOf(
             android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -54,19 +46,13 @@ class MainActivity : AppCompatActivity() {
 
         val startButton = findViewById<Button>(R.id.StartBtn)
         startButton.setOnClickListener {
-            progress_bar.visibility = View.VISIBLE
-            viewModel.getPlant(this)
-            viewModel.plantResponse.observe(this) {
-                if (!it.isEmpty()) {
-                    progress_bar.visibility = View.GONE
-                    linear_layout_recycler_view.visibility = View.VISIBLE
-                    plantList = it
-                    adapterRecyclerView.setData(plantList)
-                } else {
-                    progress_bar.visibility = View.GONE
-                }
-            }
             val intent = Intent(this, MapActivity::class.java)
+            startActivity(intent)
+        }
+
+        val plantListButton = findViewById<Button>(R.id.PlantListBtn)
+        plantListButton.setOnClickListener {
+            val intent = Intent(this, PlantListActivity::class.java)
             startActivity(intent)
         }
     }

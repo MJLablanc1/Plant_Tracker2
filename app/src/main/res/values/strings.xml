@@ -8,4 +8,5 @@
     <string name="plant_img">Plant Image</string>
     <string name="location">Location</string>
     <string name="id">Image ID</string>
+    <string name="plant_list">Plant List</string>
 </resources>
