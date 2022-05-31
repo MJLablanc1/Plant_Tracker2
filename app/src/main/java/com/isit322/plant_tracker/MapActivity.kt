@@ -132,7 +132,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         map.isMyLocationEnabled = true
         map.addMarker(MarkerOptions().position(LatLng(lat, long)).title("Marker"))
         for(plant in plantData!!) {
-            val long = plant.location.toDouble()
+            //val long = plant.location.toDouble()
             map.addMarker(MarkerOptions().position(LatLng(0.0, long)).title(plant.plantName))
         }
     }

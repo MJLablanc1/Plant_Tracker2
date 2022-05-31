@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var viewModel: PlantViewModel
-    lateinit var adapterRecyclerView: AdapterRecycler
     var plantList: List<PlantItem>? = ArrayList()
     var plantListTemp: ArrayList<PlantItem> = ArrayList()
 
@@ -43,9 +42,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
-        adapterRecyclerView = AdapterRecycler(plantList, this)
-        recycler_view.adapter = adapterRecyclerView
-        recycler_view.layoutManager = LinearLayoutManager(this)
+
 
 //        var plantListTemp: ArrayList<PlantItem> = ArrayList()
 //        plantListTemp.add(PlantItem("sunflower", "sunflower.png", "23232", "hi"))
@@ -56,21 +53,13 @@ class MainActivity : AppCompatActivity() {
             android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.ACCESS_COARSE_LOCATION))
         */
-
-
-            progress_bar.visibility = View.VISIBLE
             viewModel.getPlant(this)
             viewModel.plantResponse.observe(this) {
                 if (!it.isEmpty()) {
-                    progress_bar.visibility = View.GONE
-                    linear_layout_recycler_view.visibility = View.VISIBLE
                     plantList = it
                     Log.i("data", plantList!!.size.toString())
                     plantListTemp = plantList as ArrayList<PlantItem>
                     Log.i("data2", plantListTemp.size.toString())
-                    adapterRecyclerView.setData(plantList)
-                } else {
-                    progress_bar.visibility = View.GONE
                 }
             }
 
