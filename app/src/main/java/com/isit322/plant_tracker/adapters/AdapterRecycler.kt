@@ -40,7 +40,7 @@ class AdapterRecycler(var mList: List<PlantItem>?, var mContext: Context): Recyc
             itemView.text_view_plant_name.text = result.plantName
             itemView.text_view_plant_img.text = result.plantImg
             itemView.text_view_location.text = result.location
-
+            itemView.text_view_id.text = result.id
         }
     }
 }

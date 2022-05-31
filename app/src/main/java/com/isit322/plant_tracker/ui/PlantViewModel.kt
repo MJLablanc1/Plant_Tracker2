@@ -18,7 +18,7 @@ class PlantViewModel: ViewModel() {
     var plantResponse = MutableLiveData<List<PlantItem>>()
     val TAG = "plant_request"
 
-    fun getArtwork(context: Context) {
+    fun getPlant(context: Context) {
 
         viewModelScope.launch(Dispatchers.IO) {
             val search_plant_url = Config.BASE_URL + Config.SEARCH_ENDPOINT
