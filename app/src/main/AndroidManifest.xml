@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Plant_Tracker"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".PlantListActivity" 
+            android:exported="false" />
+        <activity
             android:name=".PlantView"
             android:exported="false" />
 

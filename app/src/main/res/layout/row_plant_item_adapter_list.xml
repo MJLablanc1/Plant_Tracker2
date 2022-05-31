@@ -29,10 +29,16 @@
             android:textSize="22sp"/>
 
         <TextView
-            android:id="@+id/text_view_location"
+            android:id="@+id/text_view_latitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/location"
+            android:text="@string/latitude"
+            android:textSize="22sp"/>
+        <TextView
+            android:id="@+id/text_view_longitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/longitude"
             android:textSize="22sp"/>
 
         <TextView

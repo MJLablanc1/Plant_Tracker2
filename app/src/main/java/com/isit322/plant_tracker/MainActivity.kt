@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         viewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
         adapterRecyclerView = AdapterRecycler(plantList, this)
         recycler_view.adapter = adapterRecyclerView
@@ -57,6 +56,7 @@ class MainActivity : AppCompatActivity() {
             android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.ACCESS_COARSE_LOCATION))
         */
+
 
             progress_bar.visibility = View.VISIBLE
             viewModel.getPlant(this)
@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+
         val startButton = findViewById<Button>(R.id.StartBtn)
         startButton.setOnClickListener {
             val intent = Intent(this, MapActivity::class.java)
@@ -85,6 +86,12 @@ class MainActivity : AppCompatActivity() {
         val enterPlantButton = findViewById<Button>(R.id.settingsBtn)
         enterPlantButton.setOnClickListener {
             val intent = Intent(this, PlantInput::class.java)
+            startActivity(intent)
+        }
+
+        val plantListButton = findViewById<Button>(R.id.PlantListBtn)
+        plantListButton.setOnClickListener {
+            val intent = Intent(this, PlantListActivity::class.java)
             startActivity(intent)
         }
     }
