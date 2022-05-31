@@ -15,16 +15,12 @@ import java.io.File
 
 //Camera functions
 //File_name and Request_code are only reference names in this instance
-
-
-
+private lateinit var photoFile: File
+private const val REQUEST_CODE = 42
+private const val FILE_NAME = "photo"
 
 class PlantInput : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        lateinit var photoFile: File
-        val REQUEST_CODE = 42
-        val FILE_NAME = "photo"
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plant_input)
 
@@ -53,9 +49,6 @@ class PlantInput : AppCompatActivity() {
 
     //Gets the photo that was just taken and displays it as a preview.
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        lateinit var photoFile: File
-        val REQUEST_CODE = 42
-
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val takenImage = BitmapFactory.decodeFile(photoFile.absolutePath)
             val imageView = findViewById<ImageView>(R.id.PlantImage)
