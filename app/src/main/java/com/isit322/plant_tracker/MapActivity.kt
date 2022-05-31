@@ -36,7 +36,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     var long = 0.0
     var lat = 0.0
 
-    var plantData: ArrayList<PlantItem>? = ArrayList()
+    var plantData: ArrayList<PlantItem> = ArrayList()
 
     private var mMapView: MapView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,13 +49,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
         }
 
-        plantData = intent.getParcelableArrayListExtra("plantData")
-        if (plantData != null) {
-            Log.i("log1", plantData!!.size.toString())
-        }
-        else {
-            Log.i("log1", "PlantData is null!")
-        }
+        plantData = intent.getParcelableArrayListExtra("plantData")!!
+        Log.i("size", plantData.size.toString())
 
         //Initializing RGeoDataViewModel to be used to make api call for reverse Geocoding data
         rGeoViewModel = ViewModelProvider(this).get(RGeoDataViewModel::class.java)
