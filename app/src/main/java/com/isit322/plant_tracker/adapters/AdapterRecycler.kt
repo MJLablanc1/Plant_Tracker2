@@ -39,7 +39,8 @@ class AdapterRecycler(var mList: List<PlantItem>?, var mContext: Context): Recyc
         fun bind(result: PlantItem) {
             itemView.text_view_plant_name.text = result.plantName
             itemView.text_view_plant_img.text = result.plantImg
-            itemView.text_view_location.text = result.location
+            itemView.text_view_latitude.text = result.latitude
+            itemView.text_view_longitude.text = result.longitude
             itemView.text_view_id.text = result.id
         }
     }
