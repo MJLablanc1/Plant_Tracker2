@@ -16,18 +16,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Plant_Tracker"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".PlantView"
+            android:exported="false" />
+
         <provider
-            android:authorities="com.isit322.plant_tracker.fileprovider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="com.isit322.plant_tracker.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/fileprovider" />
         </provider>
+
         <activity
             android:name=".PlantInput"
             android:exported="false" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
