@@ -15,9 +15,10 @@ import java.io.File
 
 //Camera functions
 //File_name and Request_code are only reference names in this instance
-private  const val FILE_NAME = "photo"
-private const val REQUEST_CODE = 42
 private lateinit var photoFile: File
+private const val REQUEST_CODE = 42
+private const val FILE_NAME = "photo"
+
 class PlantInput : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -8,7 +8,9 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -21,6 +23,7 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.isit322.artworklist.data.PlantItem
 import com.isit322.plant_tracker.data.RGeoData
 import com.isit322.plant_tracker.ui.RGeoDataViewModel
 
@@ -33,10 +36,21 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     var long = 0.0
     var lat = 0.0
 
+    var plantData: ArrayList<PlantItem> = ArrayList()
+
     private var mMapView: MapView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
+
+        val enterPlantButton = findViewById<Button>(R.id.MaptoPlantbtn)
+        enterPlantButton.setOnClickListener {
+            val intent = Intent(this, PlantInput::class.java)
+            startActivity(intent)
+        }
+
+        plantData = intent.getParcelableArrayListExtra("plantData")!!
+        Log.i("size", plantData.size.toString())
 
         //Initializing RGeoDataViewModel to be used to make api call for reverse Geocoding data
         rGeoViewModel = ViewModelProvider(this).get(RGeoDataViewModel::class.java)
@@ -117,7 +131,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         map.isMyLocationEnabled = true
         map.addMarker(MarkerOptions().position(LatLng(lat, long)).title("Marker"))
-
+        for(plant in plantData!!) {
+            val long = plant.location.toDouble()
+            map.addMarker(MarkerOptions().position(LatLng(0.0, long)).title(plant.plantName))
+        }
     }
 
     override fun onPause() {
