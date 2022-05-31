@@ -5,5 +5,6 @@ class Plant : ArrayList<PlantItem>()
 data class PlantItem(
     val plantName: String,
     val plantImg: String,
-    val location: String
+    val location: String,
+    val id: String
 )

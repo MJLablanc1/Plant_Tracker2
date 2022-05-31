@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         val startButton = findViewById<Button>(R.id.StartBtn)
         startButton.setOnClickListener {
             progress_bar.visibility = View.VISIBLE
-            viewModel.getArtwork(this)
+            viewModel.getPlant(this)
             viewModel.plantResponse.observe(this) {
                 if (!it.isEmpty()) {
                     progress_bar.visibility = View.GONE
