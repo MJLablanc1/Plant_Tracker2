@@ -22,12 +22,13 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.isit322.artworklist.data.PlantItem
 import com.isit322.plant_tracker.data.RGeoData
 import com.isit322.plant_tracker.ui.RGeoDataViewModel
 
-class MapActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var rGeoViewModel: RGeoDataViewModel
@@ -132,9 +133,19 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         map.isMyLocationEnabled = true
         map.addMarker(MarkerOptions().position(LatLng(lat, long)).title("Marker"))
         for(plant in plantData!!) {
-            //val long = plant.location.toDouble()
-            map.addMarker(MarkerOptions().position(LatLng(0.0, long)).title(plant.plantName))
+            val lat = plant.latitude.toDouble()
+            val long = plant.longitude.toDouble()
+            map.addMarker(MarkerOptions().position(LatLng(lat, long)).title(plant.plantName))
         }
+
+        map.setOnMarkerClickListener(this)
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        Toast.makeText(this, "${marker.title}", Toast.LENGTH_SHORT).show()
+//        val intent = Intent(this, PlantView::class.java)
+//        startActivity(intent)
+        return false
     }
 
     override fun onPause() {
