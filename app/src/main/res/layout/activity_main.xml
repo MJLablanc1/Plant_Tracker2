@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
     tools:context=".MainActivity"
-    android:background="@drawable/tree2">
+    android:background="@color/backgroundGreen">
 
   <TextView
       android:layout_width="180dp"
@@ -21,6 +22,12 @@
       android:shadowDx="2"
       android:shadowDy="2"
       android:shadowRadius="1.5"/>
+
+  <ImageView
+      android:id="@+id/imageView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:srcCompat="@drawable/tree2" />
 
   <Button
       android:id="@+id/StartBtn"
