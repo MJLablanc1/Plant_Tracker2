@@ -15,6 +15,7 @@ import com.isit322.artworklist.adapters.AdapterRecycler
 import com.isit322.artworklist.data.PlantItem
 import com.isit322.artworklist.ui.PlantViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_plant_list.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var viewModel: PlantViewModel
