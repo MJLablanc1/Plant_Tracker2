@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -15,19 +14,19 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.isit322.artworklist.data.PlantItem
 import com.isit322.plant_tracker.data.RGeoData
 import com.isit322.plant_tracker.ui.RGeoDataViewModel
 
-class MapActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var rGeoViewModel: RGeoDataViewModel
@@ -36,7 +35,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     var long = 0.0
     var lat = 0.0
 
-    var plantData: ArrayList<PlantItem>? = ArrayList()
+    var plantData: ArrayList<PlantItem> = ArrayList()
 
     private var mMapView: MapView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,16 +45,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         val enterPlantButton = findViewById<Button>(R.id.MaptoPlantbtn)
         enterPlantButton.setOnClickListener {
             val intent = Intent(this, PlantInput::class.java)
+            intent.putExtra("lat", lat.toString())
+            intent.putExtra("long", long.toString())
             startActivity(intent)
         }
 
-        plantData = intent.getParcelableArrayListExtra("plantData")
-        if (plantData != null) {
-            Log.i("log1", plantData!!.size.toString())
-        }
-        else {
-            Log.i("log1", "PlantData is null!")
-        }
+        plantData = intent.getParcelableArrayListExtra("plantData")!!
+        Log.i("size", plantData.size.toString())
 
         //Initializing RGeoDataViewModel to be used to make api call for reverse Geocoding data
         rGeoViewModel = ViewModelProvider(this).get(RGeoDataViewModel::class.java)
@@ -135,11 +131,29 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     @SuppressLint("MissingPermission")
     override fun onMapReady(map: GoogleMap) {
         map.isMyLocationEnabled = true
-        map.addMarker(MarkerOptions().position(LatLng(lat, long)).title("Marker"))
-        for(plant in plantData!!) {
-            val long = plant.location.toDouble()
-            map.addMarker(MarkerOptions().position(LatLng(0.0, long)).title(plant.plantName))
+        for(plant in plantData) {
+            val lat = plant.latitude.toDouble()
+            val long = plant.longitude.toDouble()
+            var newMarker: Marker? = null
+            newMarker = map.addMarker(MarkerOptions().position(LatLng(lat, long)).title(plant.plantName))
+            newMarker?.tag = plant.id
         }
+
+        map.setOnMarkerClickListener(this)
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        //Toast.makeText(this, "${marker.tag}", Toast.LENGTH_SHORT).show()
+        val markerTag = marker.tag
+        val index = plantData.indexOfFirst {
+            it.id == markerTag
+        }
+        val plantDataHere = plantData[index]
+        //Log.i("tempData", plantDataHere.plantName)
+        val intent = Intent(this, PlantView::class.java)
+        intent.putExtra("markerPlantData", plantDataHere)
+        startActivity(intent)
+        return false
     }
 
     override fun onPause() {

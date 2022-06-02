@@ -22,17 +22,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label_PlantPicture" />
 
-    <EditText
+    <TextView
         android:id="@+id/Location"
         android:layout_width="164dp"
         android:layout_height="48dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="28dp"
         android:ems="10"
-        android:hint="Location"
         android:maxLength="25"
         android:maxLines="2"
-        android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PlantName" />
 

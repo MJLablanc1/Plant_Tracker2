@@ -17,8 +17,28 @@
         android:theme="@style/Theme.Plant_Tracker"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".PlantListActivity" 
+            android:exported="false"
+            android:label="Plants"/>
+        <activity
+            android:name=".PlantView"
+            android:exported="false"
+            android:label="Plant Info"/>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.isit322.plant_tracker.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovider" />
+        </provider>
+
+        <activity
             android:name=".PlantInput"
-            android:exported="false" />
+            android:exported="false"
+            android:label="New Plant"/>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
@@ -32,7 +52,8 @@
             android:label="Map" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

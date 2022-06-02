@@ -9,5 +9,8 @@ class Plant : ArrayList<PlantItem>()
 data class PlantItem(
     val plantName: String,
     val plantImg: String,
-    val location: String
+    val latitude: String,
+    val longitude: String,
+    val id: String
 ): Parcelable
+
