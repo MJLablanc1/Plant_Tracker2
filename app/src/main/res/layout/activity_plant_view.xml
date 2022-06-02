@@ -7,23 +7,23 @@
     android:layout_height="match_parent"
     tools:context=".PlantInput">
 
-    <EditText
+    <TextView
         android:id="@+id/ViewPlantName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginTop="28dp"
+        android:layout_marginEnd="100dp"
         android:ems="10"
         android:gravity="center_horizontal"
-        android:hint="Plant Name"
-        android:inputType="text"
         android:maxLength="25"
         android:maxLines="2"
         android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ViewPlantImage" />
 
-    <EditText
+    <TextView
         android:id="@+id/ViewPlantDescription"
         android:layout_width="379dp"
         android:layout_height="48dp"
@@ -31,10 +31,7 @@
         android:layout_marginTop="28dp"
         android:ems="10"
         android:gravity="center_horizontal"
-        android:hint="Description"
-        android:inputType="textMultiLine"
         android:maxLength="255"
-        android:maxLines="2"
         android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ViewPlantName" />

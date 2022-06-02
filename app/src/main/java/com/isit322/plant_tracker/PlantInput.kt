@@ -7,10 +7,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import androidx.lifecycle.ViewModelProvider
+import com.isit322.plant_tracker.data.RGeoData
+import com.isit322.plant_tracker.ui.RGeoDataViewModel
 import java.io.File
 
 //Camera functions
@@ -19,10 +24,26 @@ private lateinit var photoFile: File
 private const val REQUEST_CODE = 42
 private const val FILE_NAME = "photo"
 
+
+
 class PlantInput : AppCompatActivity() {
+
+    lateinit var rGeoViewModel: RGeoDataViewModel
+    lateinit var rGeoDataObject: RGeoData
+
+    var lat = ""
+    var long = ""
+    var formattedAddress = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plant_input)
+
+        rGeoViewModel = ViewModelProvider(this).get(RGeoDataViewModel::class.java)
+
+        lat = intent.getStringExtra("lat").toString()
+        long = intent.getStringExtra("long").toString()
+        getGeoLocation()
 
         //Sets up the picture button, using an Intent to access the camera to actually take the photo
         val btnTakePicture = findViewById<Button>(R.id.label_PlantPicture)
@@ -55,6 +76,19 @@ class PlantInput : AppCompatActivity() {
             imageView.setImageBitmap(takenImage)
         } else {
             super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    fun getGeoLocation() {
+        val latLong = lat + "," + long;
+        rGeoViewModel.getRGeoData(latLong, this)
+        rGeoViewModel.RGeoDataResponse.observe(this) {
+            rGeoDataObject = it
+            //Get the formatted address of choice by getting the 3rd result list from the geo object
+            formattedAddress = rGeoDataObject.results[1].formatted_address
+            Log.i("geo", rGeoDataObject.results[1].formatted_address)
+            val locationText = findViewById<TextView>(R.id.Location)
+            locationText.setText(formattedAddress)
         }
     }
 

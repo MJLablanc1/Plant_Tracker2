@@ -45,9 +45,9 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
 
 
-//        var plantListTemp: ArrayList<PlantItem> = ArrayList()
-//        plantListTemp.add(PlantItem("sunflower", "sunflower.png", "23232", "hi"))
-//        plantListTemp.add(PlantItem("blueberry", "blurberrie.png", "11111", "give"))
+//        val plantListTemp: ArrayList<PlantItem> = ArrayList()
+//        plantListTemp.add(PlantItem("sunflower", "sunflower.png", "47.6101", "-122.2015", "0"))
+//        plantListTemp.add(PlantItem("blueberry", "blurberrie.png", "34.0522", "-118.2437", "1"))
 
         /*
             locationPermissionRequest.launch(arrayOf(

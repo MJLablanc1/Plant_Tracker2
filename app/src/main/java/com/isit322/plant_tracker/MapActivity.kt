@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -15,7 +14,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
@@ -47,6 +45,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
         val enterPlantButton = findViewById<Button>(R.id.MaptoPlantbtn)
         enterPlantButton.setOnClickListener {
             val intent = Intent(this, PlantInput::class.java)
+            intent.putExtra("lat", lat.toString())
+            intent.putExtra("long", long.toString())
             startActivity(intent)
         }
 
@@ -131,20 +131,28 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
     @SuppressLint("MissingPermission")
     override fun onMapReady(map: GoogleMap) {
         map.isMyLocationEnabled = true
-        map.addMarker(MarkerOptions().position(LatLng(lat, long)).title("Marker"))
-        for(plant in plantData!!) {
+        for(plant in plantData) {
             val lat = plant.latitude.toDouble()
             val long = plant.longitude.toDouble()
-            map.addMarker(MarkerOptions().position(LatLng(lat, long)).title(plant.plantName))
+            var newMarker: Marker? = null
+            newMarker = map.addMarker(MarkerOptions().position(LatLng(lat, long)).title(plant.plantName))
+            newMarker?.tag = plant.id
         }
 
         map.setOnMarkerClickListener(this)
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        Toast.makeText(this, "${marker.title}", Toast.LENGTH_SHORT).show()
-//        val intent = Intent(this, PlantView::class.java)
-//        startActivity(intent)
+        //Toast.makeText(this, "${marker.tag}", Toast.LENGTH_SHORT).show()
+        val markerTag = marker.tag
+        val index = plantData.indexOfFirst {
+            it.id == markerTag
+        }
+        val plantDataHere = plantData[index]
+        //Log.i("tempData", plantDataHere.plantName)
+        val intent = Intent(this, PlantView::class.java)
+        intent.putExtra("markerPlantData", plantDataHere)
+        startActivity(intent)
         return false
     }
 
