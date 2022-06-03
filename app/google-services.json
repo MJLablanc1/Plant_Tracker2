@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1093434958125",
+    "project_id": "planttrackerfirebase",
+    "storage_bucket": "planttrackerfirebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093434958125:android:0e38d7ea3cc8b1bb5cf3a4",
+        "android_client_info": {
+          "package_name": "com.isit322.plant_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093434958125-forv55nks8kgtoeka4trmdpvhpojfl1l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcaj62diXi62kVn_pyhr1Hd-XIdnQA1jQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093434958125-forv55nks8kgtoeka4trmdpvhpojfl1l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
