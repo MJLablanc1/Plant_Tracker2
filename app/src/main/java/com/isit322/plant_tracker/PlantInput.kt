@@ -36,7 +36,17 @@ class PlantInput : AppCompatActivity() {
     private var storageReference: StorageReference? = null
     private var filePath: Uri? = null
 
+    lateinit var rGeoViewModel: RGeoDataViewModel
+    lateinit var rGeoDataObject: RGeoData
+
+    var lat = ""
+    var long = ""
+    var formattedAddress = ""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_plant_input)
 
         val plantDatabase = openOrCreateDatabase("PlantDatabaseTest", MODE_PRIVATE, null)
 
@@ -46,17 +56,6 @@ class PlantInput : AppCompatActivity() {
         val REQUEST_CODE = 42
         val FILE_NAME = "photo"
 
-
-    lateinit var rGeoViewModel: RGeoDataViewModel
-    lateinit var rGeoDataObject: RGeoData
-
-    var lat = ""
-    var long = ""
-    var formattedAddress = ""
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_plant_input)
 
         rGeoViewModel = ViewModelProvider(this).get(RGeoDataViewModel::class.java)
 
@@ -89,7 +88,7 @@ class PlantInput : AppCompatActivity() {
 
 
             findViewById<Button>(R.id.AddPlantBtn).text = "$plantNameDisplay"
-            
+
         }
 
 
@@ -100,7 +99,7 @@ class PlantInput : AppCompatActivity() {
             // A FileProvider saves the photo, which we will later retrieve for a higher quality preview to the user
             val fileProvider = FileProvider.getUriForFile(this, "com.isit322.plant_tracker.fileprovider", photoFile)
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
-            if (takePictureIntent.resolveActivity(this.packageManager) != null ){
+            if (takePictureIntent.resolveActivity(this.packageManager) != null){
                 startActivityForResult(takePictureIntent, REQUEST_CODE)
             } else {
                 Toast.makeText(this, "Unable to open camera", Toast.LENGTH_SHORT).show()
@@ -145,5 +144,3 @@ class PlantInput : AppCompatActivity() {
     //Refresh map database
 
 }
-
-
