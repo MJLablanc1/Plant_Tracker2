@@ -16,13 +16,15 @@ import retrofit2.Response
 
 class PlantViewModel: ViewModel() {
     var plantResponse = MutableLiveData<List<PlantItem>>()
+    var plantObjectResponse = MutableLiveData<PlantItem>()
+
     val TAG = "plant_request"
 
     fun getPlant(context: Context) {
 
         viewModelScope.launch(Dispatchers.IO) {
-            val search_plant_url = Config.BASE_URL + Config.SEARCH_ENDPOINT
-            val call = ApiClient.getUserApiService().getPlants(search_plant_url)
+            val get_plant_url = Config.BASE_URL + Config.GET_ENDPOINT
+            val call = ApiClient.getUserApiService().getPlants(get_plant_url)
             call.enqueue(object:retrofit2.Callback<Plant> {
                 override fun onResponse(call: Call<Plant>, response: Response<Plant>) {
                     if (response.isSuccessful) {
@@ -40,6 +42,31 @@ class PlantViewModel: ViewModel() {
                 }
             })
         }
-
     }
+
+    fun postPlant(context: Context, plantObject: PlantItem) {
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val post_plant_url = Config.BASE_URL + Config.POST_ENDPOINT
+            val call = ApiClient.getUserApiService().postPlant(post_plant_url, plantObject)
+            call.enqueue(object:retrofit2.Callback<PlantItem> {
+                override fun onResponse(call: Call<PlantItem>, response: Response<PlantItem>) {
+                    if (response.isSuccessful) {
+                        plantObjectResponse.postValue(response.body())
+                        Log.d(TAG, "Response is successful. Response: ${response.isSuccessful}")
+                    }
+                    else {
+                        Log.d(TAG, "Response is NOT successful.")
+                    }
+
+                }
+
+                override fun onFailure(call: Call<PlantItem>, t: Throwable) {
+                    Log.d(TAG, "Request failed. Message: {${t.message}")
+                }
+            })
+        }
+    }
+
+
 }

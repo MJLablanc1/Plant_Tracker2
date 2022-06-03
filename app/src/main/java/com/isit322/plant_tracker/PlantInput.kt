@@ -8,14 +8,16 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
+import com.isit322.artworklist.data.Plant
+import com.isit322.artworklist.data.PlantItem
+import com.isit322.artworklist.ui.PlantViewModel
 import com.isit322.plant_tracker.data.RGeoData
 import com.isit322.plant_tracker.ui.RGeoDataViewModel
+import kotlinx.android.synthetic.main.activity_plant_list.*
 import java.io.File
 
 //Camera functions
@@ -27,7 +29,7 @@ private const val FILE_NAME = "photo"
 
 
 class PlantInput : AppCompatActivity() {
-
+    lateinit var plantViewModel: PlantViewModel
     lateinit var rGeoViewModel: RGeoDataViewModel
     lateinit var rGeoDataObject: RGeoData
 
@@ -40,6 +42,7 @@ class PlantInput : AppCompatActivity() {
         setContentView(R.layout.activity_plant_input)
 
         rGeoViewModel = ViewModelProvider(this).get(RGeoDataViewModel::class.java)
+        plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
 
         lat = intent.getStringExtra("lat").toString()
         long = intent.getStringExtra("long").toString()
@@ -58,6 +61,28 @@ class PlantInput : AppCompatActivity() {
                 startActivityForResult(takePictureIntent, REQUEST_CODE)
             } else {
                 Toast.makeText(this, "Unable to open camera", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+        val btnAddPlant = findViewById<Button>(R.id.AddPlantBtn)
+        btnAddPlant.setOnClickListener {
+            val plantName = findViewById<EditText>(R.id.PlantName).text.toString()
+            val description = findViewById<EditText>(R.id.PlantDescription).text.toString()
+            val plantImg = "NA"
+            val latitude = lat
+            val longitude = long
+            val id = "0"
+            val plantObject = PlantItem(plantName, description, plantImg, latitude, longitude, id)
+
+            plantViewModel.postPlant(this, plantObject)
+
+        }
+        plantViewModel.plantObjectResponse.observe(this) {
+            if (it != null) {
+                Toast.makeText(this, "plant name: " + it.plantName, Toast.LENGTH_LONG)
+            } else {
+                Toast.makeText(this, "No object found", Toast.LENGTH_LONG)
             }
         }
     }

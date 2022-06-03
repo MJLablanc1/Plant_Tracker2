@@ -38,6 +38,7 @@ class AdapterRecycler(var mList: List<PlantItem>?, var mContext: Context): Recyc
     inner class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(result: PlantItem) {
             itemView.text_view_plant_name.text = result.plantName
+            itemView.text_view_plant_description.text = result.description
             itemView.text_view_plant_img.text = result.plantImg
             itemView.text_view_latitude.text = result.latitude
             itemView.text_view_longitude.text = result.longitude
