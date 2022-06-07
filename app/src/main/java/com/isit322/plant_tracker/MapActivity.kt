@@ -172,11 +172,14 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
             it.id == markerTag
         }
 
-        val plantDataHere = plantData[index]
-        //Log.i("tempData", plantDataHere.plantName)
-        val intent = Intent(this, PlantView::class.java)
-        intent.putExtra("markerPlantData", plantDataHere)
-        startActivity(intent)
+        if (index != -1) {
+            val plantDataHere = plantData[index]
+            //Log.i("tempData", plantDataHere.plantName)
+            val intent = Intent(this, PlantView::class.java)
+            intent.putExtra("markerPlantData", plantDataHere)
+            startActivity(intent)
+            return false
+        }
         return false
     }
 
