@@ -54,7 +54,6 @@ class PlantInput : AppCompatActivity() {
         }
 
         val plantDatabase = openOrCreateDatabase("PlantDatabaseTest", MODE_PRIVATE, null)
-
         plantDatabase.execSQL("CREATE TABLE IF NOT EXISTS PlantTable(" +
                 "PlantID integer primary key autoincrement, PlantName VARCHAR, PlantLon VARCHAR, PlantLat VARCHAR, Description VARCHAR, RelativePath VARCHAR);")
 
@@ -95,10 +94,11 @@ class PlantInput : AppCompatActivity() {
             val newPlantName: Cursor = plantDatabase.rawQuery("SELECT PlantName, PlantLon, PlantLat FROM PlantTable WHERE PlantID = $finalID", null)
             newPlantName.moveToFirst()
             val plantNameDisplay = newPlantName.getString(0)
-            val plantLong = newPlantName.getString(1)
-            val plantLat = newPlantName.getString(2)
+            val plantLong = newPlantName.getString(1).toString()
+            val plantLat = newPlantName.getString(2).toString()
 
 
+            //Remove this after completion of tests
             findViewById<Button>(R.id.AddPlantBtn).text = "$plantNameDisplay: $plantLong, $plantLat"
 
         }
