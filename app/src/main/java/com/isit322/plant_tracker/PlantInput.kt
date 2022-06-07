@@ -48,6 +48,11 @@ class PlantInput : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plant_input)
 
+        val actionBar = getSupportActionBar()
+        if (actionBar!= null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+        }
+
         val plantDatabase = openOrCreateDatabase("PlantDatabaseTest", MODE_PRIVATE, null)
 
         plantDatabase.execSQL("CREATE TABLE IF NOT EXISTS PlantTable(PlantID integer primary key autoincrement, PlantName VARCHAR, Location VARCHAR, Description VARCHAR, RelativePath VARCHAR);")
@@ -105,6 +110,11 @@ class PlantInput : AppCompatActivity() {
                 Toast.makeText(this, "Unable to open camera", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
 
