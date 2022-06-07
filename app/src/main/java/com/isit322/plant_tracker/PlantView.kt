@@ -20,6 +20,11 @@ class PlantView : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plant_view)
 
+        val actionBar = getSupportActionBar()
+        if (actionBar!= null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+        }
+
         //Get the parcelable extra plant object coming from the map activity and storing it in plantData
         val plantData: PlantItem = intent.getParcelableExtra("markerPlantData")!!
 
@@ -40,5 +45,10 @@ class PlantView : AppCompatActivity() {
         //Setting the plant name text view from the plant object
         val plantName = findViewById<TextView>(R.id.ViewPlantName)
         plantName.setText(plantData.plantName)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
