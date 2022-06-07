@@ -130,9 +130,9 @@ class PlantInput : AppCompatActivity() {
         }
         plantViewModel.plantObjectResponse.observe(this) {
             if (it != null) {
-                Toast.makeText(this, "plant name: " + it.plantName, Toast.LENGTH_LONG)
+                Toast.makeText(this, "plant name: " + it.plantName, Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(this, "No object found", Toast.LENGTH_LONG)
+                Toast.makeText(this, "No object found", Toast.LENGTH_LONG).show()
             }
         }
     }
