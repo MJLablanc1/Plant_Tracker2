@@ -49,6 +49,8 @@ class PlantInput : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plant_input)
 
+        storageReference = FirebaseStorage.getInstance().reference
+
         val actionBar = getSupportActionBar()
         if (actionBar!= null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
@@ -129,6 +131,11 @@ class PlantInput : AppCompatActivity() {
             val longitude = long
             val id = "0"
             val plantObject = PlantItem(plantName, description, plantImg, latitude, longitude, id)
+
+            val ref = storageReference?.child("image_test")
+
+//            val ref = storageReference?.child("myImages/" + UUID.randomUUID().toString())
+            val uploadTask = ref?.putFile(photoFile.toUri()!!)
 
             plantViewModel.postPlant(this, plantObject)
 
