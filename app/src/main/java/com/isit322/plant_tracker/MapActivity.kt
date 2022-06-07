@@ -143,7 +143,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
     @SuppressLint("MissingPermission")
     override fun onMapReady(map: GoogleMap) {
 
-        //map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle))
+        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle))
+
+        var newMarker: Marker? = null
+        newMarker = map.addMarker(MarkerOptions()
+            .position(LatLng(0.0, 0.0))
+            .title("test")
+            .icon(BitmapDescriptorFactory.fromResource(R.drawable.circle)))
 
         map.isMyLocationEnabled = true
         for(plant in plantData) {
@@ -152,8 +158,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
             var newMarker: Marker? = null
             newMarker = map.addMarker(MarkerOptions()
                 .position(LatLng(lat, long))
-                .title(plant.plantName))
-                //.icon(BitmapDescriptorFactory.fromResource(R.drawable.circle)))
+                .title(plant.plantName)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.circle)))
             newMarker?.tag = plant.id
         }
         map.setOnMarkerClickListener(this)
@@ -165,6 +171,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
         val index = plantData.indexOfFirst {
             it.id == markerTag
         }
+
         val plantDataHere = plantData[index]
         //Log.i("tempData", plantDataHere.plantName)
         val intent = Intent(this, PlantView::class.java)

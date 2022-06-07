@@ -22,6 +22,14 @@
             android:textColor="@color/black"/>
 
         <TextView
+            android:id="@+id/text_view_plant_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/plant_description"
+            android:textSize="27sp"
+            android:textColor="@color/black"/>
+
+        <TextView
             android:id="@+id/text_view_plant_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

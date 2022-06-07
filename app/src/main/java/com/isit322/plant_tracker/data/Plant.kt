@@ -8,6 +8,7 @@ class Plant : ArrayList<PlantItem>()
 @Parcelize
 data class PlantItem(
     val plantName: String,
+    val description: String,
     val plantImg: String,
     val latitude: String,
     val longitude: String,
