@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import androidx.lifecycle.ViewModelProvider
@@ -100,6 +101,10 @@ class PlantInput : AppCompatActivity() {
             val plantLong = newPlantName.getString(1).toString()
             val plantLat = newPlantName.getString(2).toString()
 
+            val ref = storageReference?.child(relPath)
+
+//            val ref = storageReference?.child("myImages/" + UUID.randomUUID().toString())
+            val uploadTask = ref?.putFile(photoFile.toUri()!!)
 
             //Remove this after completion of tests
             findViewById<Button>(R.id.AddPlantBtn).text = "$plantNameDisplay: $plantLong, $plantLat"
