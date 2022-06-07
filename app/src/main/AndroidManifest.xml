@@ -38,7 +38,6 @@
             android:name=".PlantInput"
             android:exported="false"
             android:label="New Plant"/>
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />

@@ -28,8 +28,6 @@ private lateinit var photoFile: File
 private const val REQUEST_CODE = 42
 private const val FILE_NAME = "photo"
 
-
-
 class PlantInput : AppCompatActivity() {
 
     private var firebaseStore: FirebaseStorage? = null
@@ -56,11 +54,6 @@ class PlantInput : AppCompatActivity() {
         val plantDatabase = openOrCreateDatabase("PlantDatabaseTest", MODE_PRIVATE, null)
 
         plantDatabase.execSQL("CREATE TABLE IF NOT EXISTS PlantTable(PlantID integer primary key autoincrement, PlantName VARCHAR, Location VARCHAR, Description VARCHAR, RelativePath VARCHAR);")
-
-        lateinit var photoFile: File
-        val REQUEST_CODE = 42
-        val FILE_NAME = "photo"
-
 
         rGeoViewModel = ViewModelProvider(this).get(RGeoDataViewModel::class.java)
 
