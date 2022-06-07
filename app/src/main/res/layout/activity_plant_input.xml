@@ -7,84 +7,84 @@
     android:layout_height="match_parent"
     tools:context=".PlantInput">
 
-    <EditText
-        android:id="@+id/PlantName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:hint="Plant Name"
-        android:maxLength="25"
-        android:maxLines="2"
-        android:inputType="text"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_PlantPicture" />
-
     <TextView
         android:id="@+id/Location"
         android:layout_width="164dp"
         android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="5dp"
         android:ems="10"
         android:maxLength="25"
         android:maxLines="2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PlantName" />
-
-    <EditText
-        android:id="@+id/PlantDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Description"
-        android:inputType="textMultiLine"
-        android:maxLines="2"
-        android:minHeight="48dp"
-        android:maxLength="255"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Location" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/PlantImage"
         android:layout_width="200dp"
         android:layout_height="250dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="5dp"
         android:contentDescription="Plant Image"
         android:rotation="90"
         android:src="@drawable/tree1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Location"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/label_PlantPicture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Take a photo"
+    <EditText
+        android:id="@+id/PlantName"
+        android:layout_width="312dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="Plant Name"
+        android:inputType="text"
+        android:maxLength="25"
+        android:maxLines="2"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PlantImage" />
+        app:layout_constraintTop_toBottomOf="@+id/label_PlantPicture" />
 
     <Button
         android:id="@+id/AddPlantBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
         android:text="Add Plant"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PlantDescription" />
+
+    <EditText
+        android:id="@+id/PlantDescription"
+        android:layout_width="305dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Description"
+        android:inputType="textMultiLine"
+        android:maxLength="255"
+        android:maxLines="2"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PlantName" />
+
+    <Button
+        android:id="@+id/label_PlantPicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Take a photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PlantImage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

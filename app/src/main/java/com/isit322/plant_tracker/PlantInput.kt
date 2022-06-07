@@ -55,7 +55,8 @@ class PlantInput : AppCompatActivity() {
 
         val plantDatabase = openOrCreateDatabase("PlantDatabaseTest", MODE_PRIVATE, null)
 
-        plantDatabase.execSQL("CREATE TABLE IF NOT EXISTS PlantTable(PlantID integer primary key autoincrement, PlantName VARCHAR, Location VARCHAR, Description VARCHAR, RelativePath VARCHAR);")
+        plantDatabase.execSQL("CREATE TABLE IF NOT EXISTS PlantTable(" +
+                "PlantID integer primary key autoincrement, PlantName VARCHAR, PlantLon VARCHAR, PlantLat VARCHAR, Description VARCHAR, RelativePath VARCHAR);")
 
         lateinit var photoFile: File
         val REQUEST_CODE = 42
@@ -73,11 +74,15 @@ class PlantInput : AppCompatActivity() {
         val btnSubmit = findViewById<Button>(R.id.AddPlantBtn)
 
         btnSubmit.setOnClickListener {
+            lat = intent.getStringExtra("lat").toString()
+            long = intent.getStringExtra("long").toString()
+            getGeoLocation()
+
             val plantName = findViewById<TextView>(R.id.PlantName).text
             val plantLocation = findViewById<TextView>(R.id.Location).text
             val plantDescription = findViewById<TextView>(R.id.PlantDescription).text
 
-            plantDatabase.execSQL("INSERT INTO PlantTable VALUES (NULL, '$plantName', '$plantLocation', '$plantDescription', NULL);")
+            plantDatabase.execSQL("INSERT INTO PlantTable VALUES (NULL, '$plantName', '$long', '$lat', '$plantDescription', NULL);")
 
             val newIDRaw: Cursor = plantDatabase.rawQuery("SELECT MAX(PlantID) FROM PlantTable", null)
             newIDRaw.moveToFirst()
@@ -87,12 +92,14 @@ class PlantInput : AppCompatActivity() {
                     "\" WHERE PlantID = " + finalID)
             Toast.makeText(this, "Plant added to database", Toast.LENGTH_SHORT).show()
 
-            val newPlantName: Cursor = plantDatabase.rawQuery("SELECT PlantName FROM PlantTable WHERE PlantID = $finalID", null)
+            val newPlantName: Cursor = plantDatabase.rawQuery("SELECT PlantName, PlantLon, PlantLat FROM PlantTable WHERE PlantID = $finalID", null)
             newPlantName.moveToFirst()
             val plantNameDisplay = newPlantName.getString(0)
+            val plantLong = newPlantName.getString(1)
+            val plantLat = newPlantName.getString(2)
 
 
-            findViewById<Button>(R.id.AddPlantBtn).text = "$plantNameDisplay"
+            findViewById<Button>(R.id.AddPlantBtn).text = "$plantNameDisplay: $plantLong, $plantLat"
 
         }
 
