@@ -22,6 +22,11 @@ class PlantListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plant_list)
 
+        val actionBar = getSupportActionBar()
+        if (actionBar!= null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+        }
+
         viewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
         adapterRecyclerView = AdapterRecycler(plantList, this)
         recycler_view.adapter = adapterRecyclerView
@@ -40,5 +45,10 @@ class PlantListActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
