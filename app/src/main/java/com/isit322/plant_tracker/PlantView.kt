@@ -33,17 +33,24 @@ class PlantView : AppCompatActivity() {
         val latLong = plantData.latitude + "," + plantData.longitude;
         rGeoViewModel.getRGeoData(latLong, this)
         rGeoViewModel.RGeoDataResponse.observe(this) {
+
             if (!plantData.latitude.isNullOrEmpty() && !plantData.longitude.isNullOrEmpty() && it != null) {
                 rGeoDataObject = it
                 if (rGeoDataObject.results.count() > 0) {
                     //Get the formatted address of choice by getting the 3rd result list from the geo object
                     formattedAddress = rGeoDataObject.results[0].formatted_address
                     Log.i("geo", rGeoDataObject.results[0].formatted_address)
-                    val locationText = findViewById<TextView>(R.id.ViewPlantDescription)
+                    val locationText = findViewById<TextView>(R.id.ViewLocation)
                     locationText.setText(formattedAddress)
                 }
             }
+
         }
+
+
+        //Setting the plant view location text to the plant object's
+        val plantDesc = findViewById<TextView>(R.id.ViewPlantDescription)
+        plantDesc.setText(plantData.description)
 
         //Setting the plant name text view from the plant object
         val plantName = findViewById<TextView>(R.id.ViewPlantName)
