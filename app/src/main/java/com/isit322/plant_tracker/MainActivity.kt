@@ -22,22 +22,22 @@ class MainActivity : AppCompatActivity() {
     var plantList: List<PlantItem>? = ArrayList()
     var plantListTemp: ArrayList<PlantItem> = ArrayList()
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    val locationPermissionRequest = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        when {
-            permissions.getOrDefault(android.Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                //precise location access granted.
-            }
-            permissions.getOrDefault(android.Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                //only approximate location access granted.
-            }
-            else -> {
-                //No location access granted
-            }
-        }
-    }
+//    @RequiresApi(Build.VERSION_CODES.N)
+//    val locationPermissionRequest = registerForActivityResult(
+//        ActivityResultContracts.RequestMultiplePermissions()
+//    ) { permissions ->
+//        when {
+//            permissions.getOrDefault(android.Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+//                //precise location access granted.
+//            }
+//            permissions.getOrDefault(android.Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+//                //only approximate location access granted.
+//            }
+//            else -> {
+//                //No location access granted
+//            }
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
