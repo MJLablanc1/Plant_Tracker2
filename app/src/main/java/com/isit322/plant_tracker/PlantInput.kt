@@ -67,31 +67,6 @@ class PlantInput : AppCompatActivity() {
 
         //Sets up the picture button, using an Intent to access the camera to actually take the photo
         val btnTakePicture = findViewById<Button>(R.id.label_PlantPicture)
-        val btnSubmit = findViewById<Button>(R.id.AddPlantBtn)
-
-        /*btnSubmit.setOnClickListener {
-            val plantName = findViewById<TextView>(R.id.PlantName).text
-            val plantLocation = findViewById<TextView>(R.id.Location).text
-            val plantDescription = findViewById<TextView>(R.id.PlantDescription).text
-
-            plantDatabase.execSQL("INSERT INTO PlantTable VALUES (NULL, '$plantName', '$plantLocation', '$plantDescription', NULL);")
-
-            val newIDRaw: Cursor = plantDatabase.rawQuery("SELECT MAX(PlantID) FROM PlantTable", null)
-            newIDRaw.moveToFirst()
-            val finalID = newIDRaw.getString(0).toInt()
-            val relPath = "image_$finalID.png"
-            plantDatabase.execSQL("UPDATE PlantTable SET RelativePath = \"" + relPath +
-                    "\" WHERE PlantID = " + finalID)
-            Toast.makeText(this, "Plant added to database", Toast.LENGTH_SHORT).show()
-
-            val newPlantName: Cursor = plantDatabase.rawQuery("SELECT PlantName FROM PlantTable WHERE PlantID = $finalID", null)
-            newPlantName.moveToFirst()
-            val plantNameDisplay = newPlantName.getString(0)
-
-
-            findViewById<Button>(R.id.AddPlantBtn).text = "$plantNameDisplay"
-
-        }*/
 
 
         btnTakePicture.setOnClickListener {
