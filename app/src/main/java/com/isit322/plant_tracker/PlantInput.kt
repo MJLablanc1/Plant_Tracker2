@@ -163,12 +163,16 @@ class PlantInput : AppCompatActivity() {
         val latLong = lat + "," + long;
         rGeoViewModel.getRGeoData(latLong, this)
         rGeoViewModel.RGeoDataResponse.observe(this) {
-            rGeoDataObject = it
-            //Get the formatted address of choice by getting the 3rd result list from the geo object
-            formattedAddress = rGeoDataObject.results[1].formatted_address
-            Log.i("geo", rGeoDataObject.results[1].formatted_address)
-            val locationText = findViewById<TextView>(R.id.Location)
-            locationText.setText(formattedAddress)
+            if (!lat.isNullOrEmpty() && !long.isNullOrEmpty() && it != null) {
+                rGeoDataObject = it
+                if (rGeoDataObject.results.count() > 0) {
+                    //Get the formatted address of choice by getting the 3rd result list from the geo object
+                    formattedAddress = rGeoDataObject.results[1].formatted_address
+                    Log.i("geo", rGeoDataObject.results[1].formatted_address)
+                    val locationText = findViewById<TextView>(R.id.Location)
+                    locationText.setText(formattedAddress)
+                }
+            }
         }
     }
 
