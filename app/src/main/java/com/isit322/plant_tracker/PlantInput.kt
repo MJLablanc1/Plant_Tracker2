@@ -50,7 +50,9 @@ class PlantInput : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plant_input)
 
+        firebaseStore = FirebaseStorage.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
+
 
         val actionBar = getSupportActionBar()
         if (actionBar!= null) {
@@ -90,6 +92,7 @@ class PlantInput : AppCompatActivity() {
         btnAddPlant.setOnClickListener {
             val id = addPlantToDB(plantDatabase)
             postPlant(id)
+            uploadPlantImage(id)
         }
 
 
@@ -102,12 +105,23 @@ class PlantInput : AppCompatActivity() {
         }
     }
 
+
+    private fun uploadPlantImage(id: Int) {
+        val relPath = "image_$id.png"
+
+        val ref = storageReference?.child(relPath)
+
+//            val ref = storageReference?.child("myImages/" + UUID.randomUUID().toString())
+        val uploadTask = ref?.putFile(photoFile.toUri()!!)
+    }
+
+
     private fun addPlantToDB(plantDatabase: SQLiteDatabase): Int {
         val plantName = findViewById<TextView>(R.id.PlantName).text
         val plantLocation = findViewById<TextView>(R.id.Location).text
         val plantDescription = findViewById<TextView>(R.id.PlantDescription).text
 
-        plantDatabase.execSQL("INSERT INTO PlantTable VALUES (NULL, '$plantName', '$plantLocation', '$plantDescription', NULL);")
+        plantDatabase.execSQL("INSERT INTO PlantTable VALUES (NULL, '$plantName', '$long', '$lat', '$plantDescription', NULL);")
 
         val newIDRaw: Cursor = plantDatabase.rawQuery("SELECT MAX(PlantID) FROM PlantTable", null)
         newIDRaw.moveToFirst()
@@ -116,13 +130,6 @@ class PlantInput : AppCompatActivity() {
         plantDatabase.execSQL("UPDATE PlantTable SET RelativePath = \"" + relPath +
                 "\" WHERE PlantID = " + finalID)
         Toast.makeText(this, "Plant added to database", Toast.LENGTH_SHORT).show()
-
-        val newPlantName: Cursor = plantDatabase.rawQuery("SELECT PlantName FROM PlantTable WHERE PlantID = $finalID", null)
-        newPlantName.moveToFirst()
-        val plantNameDisplay = newPlantName.getString(0)
-
-
-        findViewById<Button>(R.id.AddPlantBtn).text = "$plantNameDisplay"
 
         return finalID
     }
@@ -160,6 +167,7 @@ class PlantInput : AppCompatActivity() {
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
+
     }
 
     fun getGeoLocation() {
