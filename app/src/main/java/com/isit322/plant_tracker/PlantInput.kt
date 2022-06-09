@@ -178,8 +178,8 @@ class PlantInput : AppCompatActivity() {
                 rGeoDataObject = it
                 if (rGeoDataObject.results.count() > 0) {
                     //Get the formatted address of choice by getting the 3rd result list from the geo object
-                    formattedAddress = rGeoDataObject.results[1].formatted_address
-                    Log.i("geo", rGeoDataObject.results[1].formatted_address)
+                    formattedAddress = rGeoDataObject.results[0].formatted_address
+                    Log.i("geo", rGeoDataObject.results[0].formatted_address)
                     val locationText = findViewById<TextView>(R.id.Location)
                     locationText.setText(formattedAddress)
                 }
