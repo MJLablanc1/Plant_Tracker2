@@ -8,13 +8,11 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -23,22 +21,19 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
 import com.isit322.artworklist.data.PlantItem
-import com.isit322.plant_tracker.data.RGeoData
-import com.isit322.plant_tracker.ui.RGeoDataViewModel
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    lateinit var rGeoViewModel: RGeoDataViewModel
-    lateinit var rGeoDataObject: RGeoData
 
     var long = 0.0
     var lat = 0.0
 
     var plantData: ArrayList<PlantItem> = ArrayList()
 
+    private var mapHere: GoogleMap? = null
     private var mMapView: MapView? = null
-    @SuppressLint("MissingPermission")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
@@ -47,7 +42,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
         if (actionBar!= null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
-
 
         val enterPlantButton = findViewById<Button>(R.id.MaptoPlantbtn)
         enterPlantButton.setOnClickListener {
@@ -59,9 +53,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
 
         plantData = intent.getParcelableArrayListExtra("plantData")!!
         Log.i("size", plantData.size.toString())
-
-        //Initializing RGeoDataViewModel to be used to make api call for reverse Geocoding data
-        rGeoViewModel = ViewModelProvider(this).get(RGeoDataViewModel::class.java)
 
         // *** IMPORTANT ***
         // MapView requires that the Bundle you pass contain _ONLY_ MapView SDK
@@ -107,12 +98,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                         Log.i("last", "Got current location")
                         long = location.longitude
                         lat = location.latitude
-                        // USING Longitude and latitude values to convert to fields such as city, state etc. using Reverse Geo Coding
-                        var latLong = "" + lat + "," + long + "";
-                        rGeoViewModel.getRGeoData(latLong, this)
-                        rGeoViewModel.RGeoDataResponse.observe(this) {
-                            rGeoDataObject = it
-                        }
+                        val newOne = LatLng(lat, long)
+                        val newZoom = 6F
+                        mapHere?.animateCamera(CameraUpdateFactory.newLatLngZoom(newOne, newZoom))
+                        mapHere?.isMyLocationEnabled = true
                     }
                 }
             } else {
@@ -142,41 +131,38 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
 
     @SuppressLint("MissingPermission")
     override fun onMapReady(map: GoogleMap) {
+        this.mapHere = map
 
         map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle))
 
-        var newMarker: Marker? = null
-        newMarker = map.addMarker(MarkerOptions()
-            .position(LatLng(0.0, 0.0))
-            .title("test")
-            .icon(BitmapDescriptorFactory.fromResource(R.drawable.circle)))
-
-        map.isMyLocationEnabled = true
         for(plant in plantData) {
-            val lat = plant.latitude.toDouble()
-            val long = plant.longitude.toDouble()
-            var newMarker: Marker? = null
-            newMarker = map.addMarker(MarkerOptions()
-                .position(LatLng(lat, long))
-                .title(plant.plantName)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.circle)))
-            newMarker?.tag = plant.id
+            if (!plant.latitude.isNullOrEmpty() && !plant.longitude.isNullOrEmpty()) {
+                val lat = plant.latitude.toDouble()
+                val long = plant.longitude.toDouble()
+                var newMarker: Marker? = null
+                newMarker = map.addMarker(MarkerOptions()
+                    .position(LatLng(lat, long))
+                    .title(plant.plantName)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.circle2)))
+                newMarker?.tag = plant.id
+            }
         }
         map.setOnMarkerClickListener(this)
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        //Toast.makeText(this, "${marker.tag}", Toast.LENGTH_SHORT).show()
         val markerTag = marker.tag
         val index = plantData.indexOfFirst {
             it.id == markerTag
         }
 
-        val plantDataHere = plantData[index]
-        //Log.i("tempData", plantDataHere.plantName)
-        val intent = Intent(this, PlantView::class.java)
-        intent.putExtra("markerPlantData", plantDataHere)
-        startActivity(intent)
+        if (index != -1) {
+            val plantDataHere = plantData[index]
+            val intent = Intent(this, PlantView::class.java)
+            intent.putExtra("markerPlantData", plantDataHere)
+            startActivity(intent)
+            return false
+        }
         return false
     }
 

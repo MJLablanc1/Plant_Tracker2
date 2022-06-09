@@ -3,6 +3,7 @@ package com.isit322.plant_tracker
 import android.app.Activity
 import android.content.Intent
 import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -69,42 +70,6 @@ class PlantInput : AppCompatActivity() {
 
         //Sets up the picture button, using an Intent to access the camera to actually take the photo
         val btnTakePicture = findViewById<Button>(R.id.label_PlantPicture)
-        val btnSubmit = findViewById<Button>(R.id.AddPlantBtn)
-
-        btnSubmit.setOnClickListener {
-            lat = intent.getStringExtra("lat").toString()
-            long = intent.getStringExtra("long").toString()
-            getGeoLocation()
-
-            val plantName = findViewById<TextView>(R.id.PlantName).text
-            val plantLocation = findViewById<TextView>(R.id.Location).text
-            val plantDescription = findViewById<TextView>(R.id.PlantDescription).text
-
-            plantDatabase.execSQL("INSERT INTO PlantTable VALUES (NULL, '$plantName', '$long', '$lat', '$plantDescription', NULL);")
-
-            val newIDRaw: Cursor = plantDatabase.rawQuery("SELECT MAX(PlantID) FROM PlantTable", null)
-            newIDRaw.moveToFirst()
-            val finalID = newIDRaw.getString(0).toInt()
-            val relPath = "image_$finalID.png"
-            plantDatabase.execSQL("UPDATE PlantTable SET RelativePath = \"" + relPath +
-                    "\" WHERE PlantID = " + finalID)
-            Toast.makeText(this, "Plant added to database", Toast.LENGTH_SHORT).show()
-
-            val newPlantName: Cursor = plantDatabase.rawQuery("SELECT PlantName, PlantLon, PlantLat FROM PlantTable WHERE PlantID = $finalID", null)
-            newPlantName.moveToFirst()
-            val plantNameDisplay = newPlantName.getString(0)
-            val plantLong = newPlantName.getString(1).toString()
-            val plantLat = newPlantName.getString(2).toString()
-
-            val ref = storageReference?.child(relPath)
-
-//            val ref = storageReference?.child("myImages/" + UUID.randomUUID().toString())
-            val uploadTask = ref?.putFile(photoFile.toUri()!!)
-
-            //Remove this after completion of tests
-            findViewById<Button>(R.id.AddPlantBtn).text = "$plantNameDisplay: $plantLong, $plantLat"
-
-        }
 
 
         btnTakePicture.setOnClickListener {
@@ -121,32 +86,57 @@ class PlantInput : AppCompatActivity() {
             }
         }
 
-
         val btnAddPlant = findViewById<Button>(R.id.AddPlantBtn)
         btnAddPlant.setOnClickListener {
-            val plantName = findViewById<EditText>(R.id.PlantName).text.toString()
-            val description = findViewById<EditText>(R.id.PlantDescription).text.toString()
-            val plantImg = "NA"
-            val latitude = lat
-            val longitude = long
-            val id = "0"
-            val plantObject = PlantItem(plantName, description, plantImg, latitude, longitude, id)
-
-            val ref = storageReference?.child("image_test")
-
-//            val ref = storageReference?.child("myImages/" + UUID.randomUUID().toString())
-            val uploadTask = ref?.putFile(photoFile.toUri()!!)
-
-            plantViewModel.postPlant(this, plantObject)
-
+            val id = addPlantToDB(plantDatabase)
+            postPlant(id)
         }
+
+
         plantViewModel.plantObjectResponse.observe(this) {
             if (it != null) {
-                Toast.makeText(this, "plant name: " + it.plantName, Toast.LENGTH_LONG)
+                Toast.makeText(this, "plant name: " + it.plantName, Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(this, "No object found", Toast.LENGTH_LONG)
+                Toast.makeText(this, "No object found", Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    private fun addPlantToDB(plantDatabase: SQLiteDatabase): Int {
+        val plantName = findViewById<TextView>(R.id.PlantName).text
+        val plantLocation = findViewById<TextView>(R.id.Location).text
+        val plantDescription = findViewById<TextView>(R.id.PlantDescription).text
+
+        plantDatabase.execSQL("INSERT INTO PlantTable VALUES (NULL, '$plantName', '$plantLocation', '$plantDescription', NULL);")
+
+        val newIDRaw: Cursor = plantDatabase.rawQuery("SELECT MAX(PlantID) FROM PlantTable", null)
+        newIDRaw.moveToFirst()
+        val finalID = newIDRaw.getString(0).toInt()
+        val relPath = "image_$finalID.png"
+        plantDatabase.execSQL("UPDATE PlantTable SET RelativePath = \"" + relPath +
+                "\" WHERE PlantID = " + finalID)
+        Toast.makeText(this, "Plant added to database", Toast.LENGTH_SHORT).show()
+
+        val newPlantName: Cursor = plantDatabase.rawQuery("SELECT PlantName FROM PlantTable WHERE PlantID = $finalID", null)
+        newPlantName.moveToFirst()
+        val plantNameDisplay = newPlantName.getString(0)
+
+
+        findViewById<Button>(R.id.AddPlantBtn).text = "$plantNameDisplay"
+
+        return finalID
+    }
+
+    private fun postPlant(Id: Int) {
+        val plantName = findViewById<EditText>(R.id.PlantName).text.toString()
+        val description = findViewById<EditText>(R.id.PlantDescription).text.toString()
+        val plantImg = "NA"
+        val latitude = lat
+        val longitude = long
+        val id = "$Id"
+        val plantObject = PlantItem(plantName, description, plantImg, latitude, longitude, id)
+
+        plantViewModel.postPlant(this, plantObject)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -176,12 +166,16 @@ class PlantInput : AppCompatActivity() {
         val latLong = lat + "," + long;
         rGeoViewModel.getRGeoData(latLong, this)
         rGeoViewModel.RGeoDataResponse.observe(this) {
-            rGeoDataObject = it
-            //Get the formatted address of choice by getting the 3rd result list from the geo object
-            formattedAddress = rGeoDataObject.results[1].formatted_address
-            Log.i("geo", rGeoDataObject.results[1].formatted_address)
-            val locationText = findViewById<TextView>(R.id.Location)
-            locationText.setText(formattedAddress)
+            if (!lat.isNullOrEmpty() && !long.isNullOrEmpty() && it != null) {
+                rGeoDataObject = it
+                if (rGeoDataObject.results.count() > 0) {
+                    //Get the formatted address of choice by getting the 3rd result list from the geo object
+                    formattedAddress = rGeoDataObject.results[1].formatted_address
+                    Log.i("geo", rGeoDataObject.results[1].formatted_address)
+                    val locationText = findViewById<TextView>(R.id.Location)
+                    locationText.setText(formattedAddress)
+                }
+            }
         }
     }
 
