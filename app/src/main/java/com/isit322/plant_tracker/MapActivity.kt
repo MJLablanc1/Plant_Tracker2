@@ -99,7 +99,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                         long = location.longitude
                         lat = location.latitude
                         val newOne = LatLng(lat, long)
-                        val newZoom = 6F
+                        val newZoom = 18F
                         mapHere?.animateCamera(CameraUpdateFactory.newLatLngZoom(newOne, newZoom))
                         mapHere?.isMyLocationEnabled = true
                     }
