@@ -38,9 +38,14 @@ class PlantView : AppCompatActivity() {
             formattedAddress = rGeoDataObject.results[3].formatted_address
             Log.i("geo", rGeoDataObject.results[3].formatted_address)
             //Setting the plant location text view from the geo API using the lat long from the plant object
-            val plantLocation = findViewById<TextView>(R.id.ViewPlantDescription)
+            val plantLocation = findViewById<TextView>(R.id.ViewLocation)
             plantLocation.setText(formattedAddress)
         }
+
+
+        //Setting the plant view location text to the plant object's
+        val plantDesc = findViewById<TextView>(R.id.ViewPlantDescription)
+        plantDesc.setText(plantData.description)
 
         //Setting the plant name text view from the plant object
         val plantName = findViewById<TextView>(R.id.ViewPlantName)
