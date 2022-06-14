@@ -44,6 +44,7 @@ class PlantInput : AppCompatActivity() {
     var lat = ""
     var long = ""
     var formattedAddress = ""
+    var plantRandomID = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,9 +60,14 @@ class PlantInput : AppCompatActivity() {
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
 
+        plantRandomID = getRandomID()
+
+
         val plantDatabase = openOrCreateDatabase("PlantDatabaseTest", MODE_PRIVATE, null)
+//        plantDatabase.execSQL("drop table if exists PlantTable")
         plantDatabase.execSQL("CREATE TABLE IF NOT EXISTS PlantTable(" +
-                "PlantID integer primary key autoincrement, PlantName VARCHAR, PlantLon VARCHAR, PlantLat VARCHAR, Description VARCHAR, RelativePath VARCHAR);")
+                "PlantID integer primary key autoincrement, PlantName VARCHAR, PlantLon VARCHAR, " +
+                "PlantLat VARCHAR, Description VARCHAR, RelativePath VARCHAR, PlantRandomID integer);")
 
         rGeoViewModel = ViewModelProvider(this).get(RGeoDataViewModel::class.java)
         plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
@@ -120,18 +126,19 @@ class PlantInput : AppCompatActivity() {
         val plantName = findViewById<TextView>(R.id.PlantName).text
         val plantLocation = findViewById<TextView>(R.id.Location).text
         val plantDescription = findViewById<TextView>(R.id.PlantDescription).text
+        Log.i("here", plantRandomID.toString())
 
-        plantDatabase.execSQL("INSERT INTO PlantTable VALUES (NULL, '$plantName', '$long', '$lat', '$plantDescription', NULL);")
+        plantDatabase.execSQL("INSERT INTO PlantTable VALUES (NULL, '$plantName', '$long', '$lat', '$plantDescription', NULL, $plantRandomID);")
 
-        val newIDRaw: Cursor = plantDatabase.rawQuery("SELECT MAX(PlantID) FROM PlantTable", null)
-        newIDRaw.moveToFirst()
-        val finalID = newIDRaw.getString(0).toInt()
-        val relPath = "image_$finalID.png"
+        //val newIDRaw: Cursor = plantDatabase.rawQuery("SELECT PlantRandomID FROM PlantTable", null)
+        //newIDRaw.moveToFirst()
+        //val finalID = newIDRaw.getString(0).toInt()
+        val relPath = "image_$plantRandomID.png"
         plantDatabase.execSQL("UPDATE PlantTable SET RelativePath = \"" + relPath +
-                "\" WHERE PlantID = " + finalID)
+                "\" WHERE PlantRandomID = " + plantRandomID)
         Toast.makeText(this, "Plant added to database", Toast.LENGTH_SHORT).show()
 
-        return finalID
+        return plantRandomID
     }
 
     private fun postPlant(Id: Int) {
@@ -140,7 +147,7 @@ class PlantInput : AppCompatActivity() {
         val plantImg = "NA"
         val latitude = lat
         val longitude = long
-        val id = "$Id"
+        val id = "$plantRandomID"
         val plantObject = PlantItem(plantName, description, plantImg, latitude, longitude, id)
 
         plantViewModel.postPlant(this, plantObject)
@@ -151,6 +158,13 @@ class PlantInput : AppCompatActivity() {
         return true
     }
 
+    private fun getRandomID(): Int {
+        val start = 111111
+        val end = 999999
+        val random = (start..end).random()
+
+        return random
+    }
 
     //gets the directory for pictures and places a new one for the photo to be taken
     private fun getPhotoFile(fileName: String): File {
