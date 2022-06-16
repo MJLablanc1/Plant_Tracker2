@@ -19,7 +19,6 @@
             android:layout_height="350dp"
             android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
-            android:rotation="90"
             android:src="@drawable/tree1"
             tools:srcCompat="@tools:sample/avatars" />
 
