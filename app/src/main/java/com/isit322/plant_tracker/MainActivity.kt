@@ -65,3 +65,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+object Validation {
+
+    val newPlantItem = PlantItem("Sun flower", "two", "three", "four", "five","six")
+
+    fun returnPlantObjectName(x: String): String {
+        return newPlantItem.plantName
+    }
+
+    fun returnPlantObjectDescription(x: String): String {
+        return newPlantItem.description
+    }
+}

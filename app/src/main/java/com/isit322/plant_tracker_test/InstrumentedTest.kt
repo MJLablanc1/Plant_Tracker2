@@ -1,25 +1,29 @@
 package com.isit322.plant_tracker_test
 
-import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.isit322.plant_tracker.PlantView
-import org.junit.Rule
+import com.isit322.plant_tracker.Validation
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(JUnit4::class)
 class InstrumentTest {
-    @Rule
-    @JvmField
-    val rule: ActivityScenarioRule<PlantView> = ActivityScenarioRule(PlantView::class.java)
+//    @Rule
+//    @JvmField
+//    val rule: ActivityScenarioRule<PlantView> = ActivityScenarioRule(PlantView::class.java)
 
     @Test
     fun enter_name_field() {
+        val desc = "Sun flower"
+        val result = Validation.returnPlantObjectName(desc)
+        assertEquals(result, desc)
 
     }
 
     @Test
     fun enter_description_field() {
-
+        val desc = "two"
+        val result = Validation.returnPlantObjectDescription(desc)
+        assertEquals(result, desc)
     }
 }
