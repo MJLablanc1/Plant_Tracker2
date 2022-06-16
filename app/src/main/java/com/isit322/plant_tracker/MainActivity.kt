@@ -52,11 +52,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val enterPlantButton = findViewById<Button>(R.id.settingsBtn)
+       /* val enterPlantButton = findViewById<Button>(R.id.settingsBtn)
         enterPlantButton.setOnClickListener {
             val intent = Intent(this, PlantInput::class.java)
             startActivity(intent)
-        }
+        }*/
 
         val plantListButton = findViewById<Button>(R.id.PlantListBtn)
         plantListButton.setOnClickListener {
