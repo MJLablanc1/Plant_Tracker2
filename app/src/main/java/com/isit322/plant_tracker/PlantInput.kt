@@ -64,7 +64,7 @@ class PlantInput : AppCompatActivity() {
 
 
         val plantDatabase = openOrCreateDatabase("PlantDatabaseTest", MODE_PRIVATE, null)
-//        plantDatabase.execSQL("drop table if exists PlantTable")
+        plantDatabase.execSQL("drop table if exists PlantTable")
         plantDatabase.execSQL("CREATE TABLE IF NOT EXISTS PlantTable(" +
                 "PlantID integer primary key autoincrement, PlantName VARCHAR, PlantLon VARCHAR, " +
                 "PlantLat VARCHAR, Description VARCHAR, RelativePath VARCHAR, PlantRandomID integer);")
