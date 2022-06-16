@@ -20,7 +20,8 @@
       app:layout_constraintHorizontal_bias="0.5"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:srcCompat="@drawable/tree2" />
+      app:srcCompat="@drawable/tree2"
+      android:background="@drawable/circle_gradient"/>
 
   <TextView
       android:id="@+id/textView"
@@ -50,7 +51,8 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.5"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/textView" />
+      app:layout_constraintTop_toBottomOf="@+id/textView"
+      android:background="@drawable/rectangle"/>
 
   <Button
       android:id="@+id/PlantListBtn"
@@ -62,7 +64,19 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.5"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/StartBtn" />
+      app:layout_constraintTop_toBottomOf="@+id/StartBtn"
+      android:background="@drawable/rectangle"/>
+
+  <ImageView
+      android:id="@+id/temp"
+      android:layout_width="180dp"
+      android:layout_height="200dp"
+      android:layout_marginTop="204dp"
+      android:background="@drawable/ring_gradient"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.497"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
   <Button
       android:id="@+id/settingsBtn"
@@ -76,6 +90,7 @@
       app:layout_constraintHorizontal_bias="0.5"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/PlantListBtn"
-      app:layout_constraintVertical_bias="0.082" />
+      app:layout_constraintVertical_bias="0.082"
+      android:background="@drawable/rectangle"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

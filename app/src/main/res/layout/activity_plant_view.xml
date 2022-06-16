@@ -11,7 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="16dp">
 
         <ImageView
             android:id="@+id/ViewPlantImage"
@@ -25,33 +26,33 @@
 
         <TextView
             android:id="@+id/ViewPlantName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
-            android:ems="10"
             android:maxLength="255"
             android:maxLines="2"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:background="@drawable/edit_text_shape"
+            android:drawableStart="@drawable/ic_baseline_local_florist_24"/>
 
         <TextView
             android:id="@+id/ViewLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:ems="10"
             android:maxLength="50"
-            android:maxLines="2" />
+            android:maxLines="2"
+            android:minHeight="48dp"
+            android:background="@drawable/edit_text_shape"
+            android:drawableStart="@drawable/ic_baseline_location_on_24"/>
 
         <TextView
             android:id="@+id/ViewPlantDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
             android:layout_marginTop="15dp"
-            android:ems="10"
-            android:gravity="start|top"
-            android:layout_gravity="center_horizontal" />
+            android:background="@drawable/edit_text_shape"
+            android:drawableStart="@drawable/ic_baseline_note_24" />
 
     </LinearLayout>
 

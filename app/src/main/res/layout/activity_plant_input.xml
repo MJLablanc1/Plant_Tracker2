@@ -11,13 +11,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="16dp"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/PlantImage"
             android:layout_width="250dp"
             android:layout_height="350dp"
-            android:layout_marginTop="20dp"
             android:layout_gravity="center"
             android:contentDescription="Plant Image"
             android:rotation="90"
@@ -30,21 +30,24 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="Take a photo"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rectangle" />
 
         <TextView
             android:id="@+id/Location"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:ems="10"
             android:maxLength="50"
-            android:maxLines="2" />
+            android:maxLines="2"
+            android:background="@drawable/edit_text_shape"
+            android:drawableStart="@drawable/ic_baseline_location_on_24"/>
 
         <EditText
             android:id="@+id/PlantName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
@@ -53,21 +56,22 @@
             android:inputType="text"
             android:maxLength="255"
             android:maxLines="2"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:background="@drawable/edit_text_shape"
+            android:drawableStart="@drawable/ic_baseline_local_florist_24"/>
 
         <EditText
             android:id="@+id/PlantDescription"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
-            android:ems="10"
             android:gravity="start|top"
             android:hint="Description"
             android:inputType="textMultiLine"
-            android:minHeight="48dp"
             android:lines="4"
             android:maxLines="4"
-            android:layout_gravity="center" />
+            android:background="@drawable/edit_text_shape"
+            android:drawableStart="@drawable/ic_baseline_note_24"/>
 
         <Button
             android:id="@+id/AddPlantBtn"
@@ -75,7 +79,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="Add Plant"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:background="@drawable/rectangle"/>
 
     </LinearLayout>
 
